@@ -9,12 +9,12 @@
 #define gndUnidad A4
 #define botonSumar 3
 #define botonRestar 4
-#define gndDecimal A5
+#define gndDecimal A5 //Defino nuevo nombres a los pines
 int numeros = 0;
 int decimales = 0;
 int sumar = 0;
 int restar = 0;
-int reseteo = 0;
+int reseteo = 0; //Declaro las variables antes de utilizarlas
 void setup()
 {
   pinMode (botonReseteo, INPUT_PULLUP);
@@ -28,8 +28,8 @@ void setup()
   pinMode (D, OUTPUT);
   pinMode (E, OUTPUT);
   pinMode (F, OUTPUT);
-  pinMode (G, OUTPUT);
-  Serial.begin(9600);
+  pinMode (G, OUTPUT);  //Defino salidas de los pines y botones
+  Serial.begin(9600);  //Utilizo para debugear
 }
 
 
@@ -37,26 +37,26 @@ void loop()
 {
   if(decimales == 0)
   {
-    digitalWrite(gndDecimal, HIGH);
+    digitalWrite(gndDecimal, HIGH);  //Si no hay numeros decimales no prendo el led
   }
   sumar = digitalRead(botonSumar);
   restar = digitalRead(botonRestar);
-  reseteo = digitalRead(botonReseteo);
+  reseteo = digitalRead(botonReseteo);  //Leo el valor que me arroja si presiono el boton
   digitalPrint(numeros);
   	if (reseteo == 0)
     {
 
       numeros = 0;
-      decimales = 0;
+      decimales = 0; 
     }
   
   	if (sumar == 0) //Suma
     {
       numeros++;
-      if(decimales >= 9 and numeros >= 9)
+      if(decimales >= 9 and numeros > 9)  
       {
         decimales = 0;
-      	numeros = 0;
+      	numeros = 0;  //si los numeros superan el valor a 99 que se vuelva a contar desde 0
       }
       if (numeros > 9 and decimales < 9)
       {
@@ -67,7 +67,7 @@ void loop()
   	if (restar == 0) 
     {
       numeros --; //Resta
-      if (numeros < 0 and decimales > 0)
+      if (numeros < 0 and decimales > 0) //Si hay valores decimales y las unidades pasan a ser menores a 0 que solo se resten los decimales
       {
         decimales --;
       	numeros = 9;
@@ -75,16 +75,16 @@ void loop()
       if (numeros <0 and decimales == 0)
       {
         numeros = 9;
-      	decimales = 9;
+      	decimales = 9; //si los numeros son menores a 00 que pase a ser 99
       }
     }
   	
-  	if (decimales > 0 and decimales < 10)
+  	if (decimales > 0 and decimales < 10) 
     {
     	digitalWrite(gndDecimal, LOW);
       	digitalWrite(gndUnidad, HIGH);
       	digitalPrint(decimales);
-      	delay(50);
+      	delay(50); //Que se muestren los numeros decimales por 50 milisegundos y luego pasen a mostrarse los valores en unidades
       	digitalWrite(gndUnidad, LOW);
       	digitalWrite(gndDecimal, HIGH);
       	digitalPrint(numeros);
@@ -95,7 +95,7 @@ void loop()
   delay(50);
   	
 }
-void digitalPrint(int numero)
+void digitalPrint(int numero)  //funcion para prender o apagar en el led dependiendo del numero que se quiera mostrar
 {
   digitalWrite(A, LOW);
   digitalWrite(B, LOW);
