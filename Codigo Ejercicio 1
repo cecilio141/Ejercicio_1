@@ -29,7 +29,7 @@ void setup()
   pinMode (E, OUTPUT);
   pinMode (F, OUTPUT);
   pinMode (G, OUTPUT);  //Defino salidas de los pines y botones
-  Serial.begin(9600);  //Utilizo para debugear
+  Serial.begin(9600);  //Utilizo para debugear y visualizar en la terminal asi lograr detectar algun tipo de error
 }
 
 
@@ -42,15 +42,15 @@ void loop()
   sumar = digitalRead(botonSumar);
   restar = digitalRead(botonRestar);
   reseteo = digitalRead(botonReseteo);  //Leo el valor que me arroja si presiono el boton
-  digitalPrint(numeros);
-  	if (reseteo == 0)
+  digitalPrint(numeros); //Llamo a la funcion (digitalPrint), la cual me va a imprimir los numeros en el led de 7 segmentos.
+  	if (reseteo == 0) // Si se presiona el boton reseteo el contador va a valer 0.
     {
 
       numeros = 0;
       decimales = 0; 
     }
   
-  	if (sumar == 0) //Suma
+  	if (sumar == 0) //Suma //Cada vez que presiono el boton sumar se suman los numeros del contador
     {
       numeros++;
       if(decimales >= 9 and numeros > 9)  
@@ -58,13 +58,13 @@ void loop()
         decimales = 0;
       	numeros = 0;  //si los numeros superan el valor a 99 que se vuelva a contar desde 0
       }
-      if (numeros > 9 and decimales < 9)
+      if (numeros > 9 and decimales < 9) //Si las unidades pasan a ser mayores que 9 y los decimales son menores a 9, se le agrega un numero al decimal.
       {
         decimales++;
       	numeros = 0;
       }
     }
-  	if (restar == 0) 
+  	if (restar == 0) //Resta unidades al contador
     {
       numeros --; //Resta
       if (numeros < 0 and decimales > 0) //Si hay valores decimales y las unidades pasan a ser menores a 0 que solo se resten los decimales
@@ -95,7 +95,7 @@ void loop()
   delay(50);
   	
 }
-void digitalPrint(int numero)  //funcion para prender o apagar en el led dependiendo del numero que se quiera mostrar
+void digitalPrint(int numero)  //Funcion para prender o apagar en el led dependiendo del numero que se quiera mostrar
 {
   digitalWrite(A, LOW);
   digitalWrite(B, LOW);
