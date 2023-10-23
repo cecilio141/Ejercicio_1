@@ -1,0 +1,224 @@
+#define A 12
+#define B 13
+#define C 7
+#define D 8
+#define E 9
+#define F 11
+#define G 10
+#define botonReseteo 5
+#define gndUnidad A4
+#define botonSumar 3
+#define botonRestar 4
+#define gndDecimal A5
+int numeros = 0;
+int decimales = 0;
+int sumar = 0;
+int restar = 0;
+int reseteo = 0;
+void setup()
+{
+  pinMode (botonReseteo, INPUT_PULLUP);
+  pinMode (botonSumar, INPUT_PULLUP);
+  pinMode (botonRestar, INPUT_PULLUP);
+  pinMode (gndUnidad, OUTPUT);
+  pinMode (gndDecimal, OUTPUT);
+  pinMode (A, OUTPUT);
+  pinMode (B, OUTPUT);
+  pinMode (C, OUTPUT);
+  pinMode (D, OUTPUT);
+  pinMode (E, OUTPUT);
+  pinMode (F, OUTPUT);
+  pinMode (G, OUTPUT);
+  Serial.begin(9600);
+}
+
+
+void loop()
+{
+  if(decimales == 0)
+  {
+    digitalWrite(gndDecimal, HIGH);
+  }
+  sumar = digitalRead(botonSumar);
+  restar = digitalRead(botonRestar);
+  reseteo = digitalRead(botonReseteo);
+  digitalPrint(numeros);
+  	if (reseteo == 0)
+    {
+
+      numeros = 0;
+      decimales = 0;
+    }
+  
+  	if (sumar == 0) //Suma
+    {
+      numeros++;
+      if(decimales >= 9 and numeros >= 9)
+      {
+        decimales = 0;
+      	numeros = 0;
+      }
+      if (numeros > 9 and decimales < 9)
+      {
+        decimales++;
+      	numeros = 0;
+      }
+    }
+  	if (restar == 0) 
+    {
+      numeros --; //Resta
+      if (numeros < 0 and decimales > 0)
+      {
+        decimales --;
+      	numeros = 9;
+      }
+      if (numeros <0 and decimales == 0)
+      {
+        numeros = 9;
+      	decimales = 9;
+      }
+    }
+  	
+  	if (decimales > 0 and decimales < 10)
+    {
+    	digitalWrite(gndDecimal, LOW);
+      	digitalWrite(gndUnidad, HIGH);
+      	digitalPrint(decimales);
+      	delay(50);
+      	digitalWrite(gndUnidad, LOW);
+      	digitalWrite(gndDecimal, HIGH);
+      	digitalPrint(numeros);
+    
+    }
+
+      
+  delay(50);
+  	
+}
+void digitalPrint(int numero)
+{
+  digitalWrite(A, LOW);
+  digitalWrite(B, LOW);
+  digitalWrite(C, LOW);
+  digitalWrite(D, LOW);
+  digitalWrite(E, LOW);
+  digitalWrite(F, LOW);
+  digitalWrite(G, LOW);
+  switch (numero)
+  {
+    case 0:
+    {
+    	digitalWrite(A, HIGH);
+  		digitalWrite(B, HIGH);
+  		digitalWrite(C, HIGH);
+  		digitalWrite(D, HIGH);
+  		digitalWrite(E, HIGH);
+  		digitalWrite(F, HIGH);
+  		digitalWrite(G, LOW);
+      	break;
+    }
+    case 1:
+    {
+    	digitalWrite(A, LOW);
+  		digitalWrite(B, HIGH);
+  		digitalWrite(C, HIGH);
+  		digitalWrite(D, LOW);
+  		digitalWrite(E, LOW);
+  		digitalWrite(F, LOW);
+  		digitalWrite(G, LOW);
+      	break;
+    }
+    case 2:
+    {
+    	digitalWrite(A, HIGH);
+  		digitalWrite(B, HIGH);
+  		digitalWrite(C, LOW);
+  		digitalWrite(D, HIGH);
+  		digitalWrite(E, HIGH);
+  		digitalWrite(F, LOW);
+  		digitalWrite(G, HIGH);
+      	break;
+    }
+    case 3:
+    {
+    	digitalWrite(A, HIGH);
+  		digitalWrite(B, HIGH);
+  		digitalWrite(C, HIGH);
+  		digitalWrite(D, HIGH);
+  		digitalWrite(E, LOW);
+  		digitalWrite(F, LOW);
+  		digitalWrite(G, HIGH);
+      	break;
+    }
+    case 4:
+    {
+    	digitalWrite(A, LOW);
+  		digitalWrite(B, HIGH);
+  		digitalWrite(C, HIGH);
+  		digitalWrite(D, LOW);
+  		digitalWrite(E, LOW);
+  		digitalWrite(F, HIGH);
+  		digitalWrite(G, HIGH);
+      	break;
+    }
+    case 5:
+    {
+    	digitalWrite(A, HIGH);
+  		digitalWrite(B, LOW);
+  		digitalWrite(C, HIGH);
+  		digitalWrite(D, HIGH);
+  		digitalWrite(E, LOW);
+  		digitalWrite(F, HIGH);
+  		digitalWrite(G, HIGH);
+      	break;
+    }
+    case 6:
+    {
+    	digitalWrite(A, HIGH);
+  		digitalWrite(B, LOW);
+  		digitalWrite(C, HIGH);
+  		digitalWrite(D, HIGH);
+  		digitalWrite(E, HIGH);
+  		digitalWrite(F, HIGH);
+  		digitalWrite(G, HIGH);
+      	break;
+    }
+    case 7:
+    {
+    	digitalWrite(A, HIGH);
+  		digitalWrite(B, HIGH);
+  		digitalWrite(C, HIGH);
+  		digitalWrite(D, LOW);
+  		digitalWrite(E, LOW);
+  		digitalWrite(F, LOW);
+  		digitalWrite(G, LOW);
+      	break;
+    }
+    case 8:
+    {
+    	digitalWrite(A, HIGH);
+  		digitalWrite(B, HIGH);
+  		digitalWrite(C, HIGH);
+  		digitalWrite(D, HIGH);
+  		digitalWrite(E, HIGH);
+  		digitalWrite(F, HIGH);
+  		digitalWrite(G, HIGH);
+      	break;
+    }
+    case 9:
+    {
+    	digitalWrite(A, HIGH);
+  		digitalWrite(B, HIGH);
+  		digitalWrite(C, HIGH);
+  		digitalWrite(D, LOW);
+  		digitalWrite(E, LOW);
+  		digitalWrite(F, HIGH);
+  		digitalWrite(G, HIGH);
+      	break;
+    }
+        case 10:
+    {
+
+    }
+  }
+}
